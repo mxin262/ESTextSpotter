@@ -63,7 +63,7 @@ Extract all the datasets and make sure you organize them as follows
 
 |Dataset|H-mean|Weights|
 |:------:|:------:|:------:|
-|**VinText**|78.1|[OneDrive](https://1drv.ms/u/s!AotJrudtBr-K70jc2mzjdm7XOuAF?e=pAIynN)|
+|**VinText**|73.6|[OneDrive](https://1drv.ms/u/s!AotJrudtBr-K70jc2mzjdm7XOuAF?e=pAIynN)|
 
 |Dataset|Det-P|Det-R|Det-H|1-NED|Weights|
 |:------:|:------:|:------:|:------:|:------:|:------:|
