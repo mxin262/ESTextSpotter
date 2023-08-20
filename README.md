@@ -119,7 +119,7 @@ For commercial use, please contact Prof. Lianwen Jin (eelwjin@scut.edu.cn).
 Copyright 2023, [Deep Learning and Vision Computing Lab](http://www.dlvc-lab.net), South China University of Technology. 
 
 ## Acknowlegement
-[DINO](https://github.com/IDEA-Research/DINO), [Detectron2](https://github.com/facebookresearch/detectron2), [TESTR](https://github.com/mlpc-ucsd/TESTR/tree/main)
+[AdelaiDet](https://github.com/aim-uofa/AdelaiDet), [DINO](https://github.com/IDEA-Research/DINO), [Detectron2](https://github.com/facebookresearch/detectron2), [TESTR](https://github.com/mlpc-ucsd/TESTR/tree/main)
 
 ## Citation
 
