@@ -2,7 +2,7 @@
 
 <img src="figs/overall.png" width="100%">
 
-This is the pytorch implementation of Paper: ESTextSpotter: Towards Better Scene Text Spotting with Explicit Synergy in Transformer (ICCV 2023). The paper is available at [this link]().
+This is the pytorch implementation of Paper: ESTextSpotter: Towards Better Scene Text Spotting with Explicit Synergy in Transformer (ICCV 2023). The paper is available at [this link](https://arxiv.org/pdf/2308.10147.pdf).
 
 ## News
 
@@ -126,3 +126,11 @@ Copyright 2023, [Deep Learning and Vision Computing Lab](http://www.dlvc-lab.net
 If our paper helps your research, please cite it in your publications:
 
 ```
+@article{huang2023ests,
+  title={ESTextSpotter: Towards Better Scene Text Spotting with Explicit Synergy
+  in Transformer},
+  author={Mingxin Huang and Jiaxin Zhang and Dezhi Peng and Hao Lu and Can Huang and Yuliang
+  Liu and Xiang Bai and Lianwen Jin},
+  journal={arXiv preprint arXiv:2308.10147},
+  year={2023}
+}
