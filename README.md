@@ -25,7 +25,7 @@ cd models/ests/ops
 sh make.sh
 ```
 
-### Data preparation
+### Data Preparation
 
 Please download TotalText, CTW1500, MLT, and CurvedSynText150k according to the guide provided by AdelaiDet: [README.md](https://github.com/aim-uofa/AdelaiDet/blob/master/datasets/README.md).
 
@@ -107,7 +107,7 @@ Visualize the detection and recognition results
 python vis.py
 ```
 
-## Example results:
+## Example Results:
 
 <img src="figs/results.png" width="100%">
 
