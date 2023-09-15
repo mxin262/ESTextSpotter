@@ -100,7 +100,7 @@ transform = T.Compose([
     T.ToTensor(),
     T.Normalize([0.485,0.456,0.406],[0.229,0.224,0.225])]
 )
-image_dir = './datasets/vietnamese/test_image/'
+image_dir = './datasets/vintext/test_image/'
 dir = os.listdir(image_dir)
 for idx, i in enumerate(dir):
     image = Image.open(image_dir + i).convert('RGB')
