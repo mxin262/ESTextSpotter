@@ -38,29 +38,32 @@ def _bezier_to_poly(bezier):
     return points
 
 class CocoDetection(torchvision.datasets.CocoDetection):
-    def __init__(self, img_folder, ann_file, transforms, return_masks, aux_target_hacks=None):
+    def __init__(self, img_folder, ann_file, transforms, return_masks, image_set=None, aux_target_hacks=None):
         super(CocoDetection, self).__init__(img_folder, ann_file)
         self._transforms = transforms
         self.prepare = ConvertCocoPolysToMask(return_masks)
         self.aux_target_hacks = aux_target_hacks
+        self.image_set = image_set
 
     def __getitem__(self, idx):
 
         img, target = super(CocoDetection, self).__getitem__(idx)
-        # while not len(target):
-        #     print("Error idx: {}".format(idx))
-        #     idx = random.randint(0, self.__len__()-1)
-        #     img, target = super(CocoDetection, self).__getitem__(idx)
+        if self.image_set=='train':
+            while not len(target):
+                print("Error idx: {}".format(idx))
+                idx = random.randint(0, self.__len__()-1)
+                img, target = super(CocoDetection, self).__getitem__(idx)
         image_id = self.ids[idx]
         target = {'image_id': image_id, 'annotations': target}
         img, target = self.prepare(img, target)
-        # while not len(target["boxes"]):
-        #     print("Error idx: {}".format(idx))
-        #     idx = random.randint(0, self.__len__()-1)
-        #     img, target = super(CocoDetection, self).__getitem__(idx)
-        #     image_id = self.ids[idx]
-        #     target = {'image_id': image_id, 'annotations': target}
-        #     img, target = self.prepare(img, target)
+        if self.image_set=='train':
+            while not len(target["boxes"]):
+                print("Error idx: {}".format(idx))
+                idx = random.randint(0, self.__len__()-1)
+                img, target = super(CocoDetection, self).__getitem__(idx)
+                image_id = self.ids[idx]
+                target = {'image_id': image_id, 'annotations': target}
+                img, target = self.prepare(img, target)
         if self._transforms is not None:
             img, target = self._transforms(img, target)
         return img, target
@@ -305,7 +308,7 @@ def build(image_set, args):
               args.max_size_test, args.min_size_test, args.crop_min_ratio, args.crop_max_ratio,
               args.crop_prob, args.rotate_max_angle, args.rotate_prob, args.brightness, args.contrast,
               args.saturation, args.hue, args.distortion_prob)
-        dataset = CocoDetection(img_folder, ann_file, transforms=transforms, return_masks=args.masks)
+        dataset = CocoDetection(img_folder, ann_file, transforms=transforms, return_masks=args.masks, image_set=image_set)
         datasets.append(dataset)
     dataset = datasets[0]
     if len(datasets) > 1:
