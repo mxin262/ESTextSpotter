@@ -27,9 +27,7 @@ sh make.sh
 
 ### Data Preparation
 
-Please download TotalText, CTW1500, MLT, and CurvedSynText150k according to the guide provided by AdelaiDet: [README.md](https://github.com/aim-uofa/AdelaiDet/blob/master/datasets/README.md).
-
-ICDAR2015 dataset can be download via [link](https://ucsdcloud-my.sharepoint.com/:u:/g/personal/xiz102_ucsd_edu/EWgEM5BSRjBEua4B_qLrGR0BaombUL8K3d23ldXOb7wUNA?e=7VzH34).
+Please download TotalText, CTW1500, MLT, ICDAR2013, ICDAR2015, and CurvedSynText150k according to the guide provided by SPTS v2: [README.md](https://github.com/bytedance/SPTSv2#dataset).
 
 Extract all the datasets and make sure you organize them as follows
 
