@@ -29,7 +29,7 @@ sh make.sh
 
 Please download TotalText, CTW1500, MLT, ICDAR2013, ICDAR2015, and CurvedSynText150k according to the guide provided by SPTS v2: [README.md](https://github.com/bytedance/SPTSv2#dataset).
 
-Please download the MLT 2019 in [Images](https://rrc.cvc.uab.es/?ch=15&com=downloads) [Annotations](https://drive.google.com/file/d/1P_8epJrFc2bVa9vj771TWxBuI3tzK86G/view?usp=drive_link).
+Please download the MLT 2019 in [Images](https://rrc.cvc.uab.es/?ch=15&com=downloads) / [Annotations](https://drive.google.com/file/d/1P_8epJrFc2bVa9vj771TWxBuI3tzK86G/view?usp=drive_link).
 
 Extract all the datasets and make sure you organize them as follows
 
