@@ -84,6 +84,15 @@ class TextEvaluator():
             self._text_eval_confidence = 0.415
             weighted_ed = False
             self.submit = True
+        if "vintext" in dataset_name:
+            self.CTLABELS = [' ', '!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\', ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}', '~', 'ˋ', 'ˊ', '﹒', 'ˀ', '˜', 'ˇ', 'ˆ', '˒', '‑']
+            self.voc_size = 107
+            self._text_eval_gt_path = "evaluation/gt_vintext.zip"
+            self._word_spotting = True
+            self.rec_confidence = 0.975
+            self._text_eval_confidence = 0.415
+            weighted_ed = False
+            use_lexicon = False
         else:
             self._text_eval_gt_path = ""
             self.rec_confidence = 0
@@ -108,7 +117,10 @@ class TextEvaluator():
             return all(a)
 
         def de_ascii(s):
-            a = [c for c in s if ord(c) < 128]
+            if "vintext" in self.dataset_name:
+                a = [c for c in s]
+            else:
+                a = [c for c in s if ord(c) < 128]
             outa = ''
             for i in a:
                 outa +=i
@@ -379,13 +391,16 @@ class TextEvaluator():
         for c in rec:
             c = int(c)
             if c < self.voc_size - 1:
-                if self.voc_size == 96:
+                if self.voc_size < 108:
+                    if c > len(self.CTLABELS):
+                        continue
                     s += self.CTLABELS[c]
                 else:
                     s += str(chr(self.CTLABELS[c]))
             elif c == self.voc_size -1:
                 s += NULL_CHAR
-    
+        if "vintext" in self.dataset_name:
+            s = vintext_decoder(s)
         return s
 
 def polygon2rbox(polygon, image_height, image_width):
@@ -432,3 +447,59 @@ def get_tight_rect(points, start_x, start_y, image_height, image_width, scale):
     py3 = min(max(py3, 1), image_height - 1)
     py4 = min(max(py4, 1), image_height - 1)
     return [px1, py1, px2, py2, px3, py3, px4, py4]
+
+dictionary = "aàáạảãâầấậẩẫăằắặẳẵAÀÁẠẢÃĂẰẮẶẲẴÂẦẤẬẨẪeèéẹẻẽêềếệểễEÈÉẸẺẼÊỀẾỆỂỄoòóọỏõôồốộổỗơờớợởỡOÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠiìíịỉĩIÌÍỊỈĨuùúụủũưừứựửữƯỪỨỰỬỮUÙÚỤỦŨyỳýỵỷỹYỲÝỴỶỸ"
+
+
+def make_groups():
+    groups = []
+    i = 0
+    while i < len(dictionary) - 5:
+        group = [c for c in dictionary[i : i + 6]]
+        i += 6
+        groups.append(group)
+    return groups
+
+
+groups = make_groups()
+
+TONES = ["", "ˋ", "ˊ", "﹒", "ˀ", "˜"]
+SOURCES = ["ă", "â", "Ă", "Â", "ê", "Ê", "ô", "ơ", "Ô", "Ơ", "ư", "Ư", "Đ", "đ"]
+TARGETS = ["aˇ", "aˆ", "Aˇ", "Aˆ", "eˆ", "Eˆ", "oˆ", "o˒", "Oˆ", "O˒", "u˒", "U˒", "D-", "d‑"]
+
+
+def correct_tone_position(word):
+    word = word[:-1]
+    if len(word) < 2:
+        pass
+    first_ord_char = ""
+    second_order_char = ""
+    for char in word:
+        for group in groups:
+            if char in group:
+                second_order_char = first_ord_char
+                first_ord_char = group[0]
+    if word[-1] == first_ord_char and second_order_char != "":
+        pair_chars = ["qu", "Qu", "qU", "QU", "gi", "Gi", "gI", "GI"]
+        for pair in pair_chars:
+            if pair in word and second_order_char in ["u", "U", "i", "I"]:
+                return first_ord_char
+        return second_order_char
+    return first_ord_char
+
+
+def vintext_decoder(recognition):
+    for char in TARGETS:
+        recognition = recognition.replace(char, SOURCES[TARGETS.index(char)])
+    if len(recognition) < 1:
+        return recognition
+    if recognition[-1] in TONES:
+        if len(recognition) < 2:
+            return recognition
+        replace_char = correct_tone_position(recognition)
+        tone = recognition[-1]
+        recognition = recognition[:-1]
+        for group in groups:
+            if replace_char in group:
+                recognition = recognition.replace(replace_char, group[TONES.index(tone)])
+    return recognition
