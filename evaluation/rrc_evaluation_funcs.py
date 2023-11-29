@@ -208,7 +208,7 @@ def get_tl_line_values_gt(line,LTRB=True,withTranscription=False,withConfidence=
         else:
             raise('not implemented')
 
-        validate_clockwise_points(points)
+        # validate_clockwise_points(points)
         
         if (imWidth>0 and imHeight>0):
             for ip in range(0, len(points), 2):
@@ -266,7 +266,7 @@ def get_tl_line_values(line,LTRB=True,withTranscription=False,withConfidence=Fal
             raise('not implemented')
         
         # print('det clock wise')
-        validate_clockwise_points(points)
+        # validate_clockwise_points(points)
         
         if (imWidth>0 and imHeight>0):
             for ip in range(0, len(points), 2):
