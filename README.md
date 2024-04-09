@@ -5,6 +5,7 @@
 This is the pytorch implementation of Paper: ESTextSpotter: Towards Better Scene Text Spotting with Explicit Synergy in Transformer (ICCV 2023). The paper is available at [this link](https://arxiv.org/pdf/2308.10147.pdf).
 
 ## News
+`2024.04.09` We release a new text spotting pipeline [Bridge Text Spotting](https://arxiv.org/pdf/2404.04624.pdf) that combines the advantages of end-to-end and two-step text spotting. [Code](https://github.com/mxin262/Bridging-Text-Spotting)
 
 `2023.07.21` Code is available. 
 
